@@ -121,6 +121,8 @@ public class KeyguardViewManager {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_NOTIFICATIONS), false, this);
+
+            updateSettings();
         }
 
         @Override
@@ -153,6 +155,9 @@ public class KeyguardViewManager {
         mViewManager = viewManager;
         mViewMediatorCallback = callback;
         mLockPatternUtils = lockPatternUtils;
+
+        SettingsObserver observer = new SettingsObserver(new Handler());
+        observer.observe();
     }
 
     /**
@@ -434,10 +439,12 @@ public class KeyguardViewManager {
                 options.getBoolean(IS_SWITCHING_USER));
 
         if (mLockscreenNotifications) {
-            mNotificationView = (NotificationHostView)mKeyguardView.findViewById(R.id.notification_host_view);
-            mNotificationViewManager.setHostView(mNotificationView);
-            mNotificationViewManager.onScreenTurnedOff();
-            mNotificationView.addNotifications();
+            mNotificationView = (NotificationHostView) mKeyguardView.findViewById(R.id.notification_host_view);
+            if (mNotificationViewManager != null && mNotificationView != null) {
+                mNotificationViewManager.setHostView(mNotificationView);
+                mNotificationViewManager.onScreenTurnedOff();
+                mNotificationView.addNotifications();
+            }
         }
 
         // HACK
@@ -558,7 +565,7 @@ public class KeyguardViewManager {
             mKeyguardView.onScreenTurnedOff();
         }
 
-        if (mLockscreenNotifications) {
+        if (mNotificationViewManager != null) {
             mNotificationViewManager.onScreenTurnedOff();
         }
     }
@@ -615,7 +622,9 @@ public class KeyguardViewManager {
         }
 
         if (mLockscreenNotifications) {
-            mNotificationViewManager.onScreenTurnedOn();
+            if (mNotificationViewManager != null) {
+                mNotificationViewManager.onScreenTurnedOn();
+            }
         }
     }
 
@@ -632,7 +641,9 @@ public class KeyguardViewManager {
         if (DEBUG) Log.d(TAG, "hide()");
 
         if (mLockscreenNotifications) {
-            mNotificationViewManager.onDismiss();
+            if (mNotificationViewManager != null) {
+                mNotificationViewManager.onDismiss();
+            }
         }
 
         if (mKeyguardHost != null) {
