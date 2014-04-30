@@ -2042,18 +2042,6 @@ public final class ActivityThread {
         return mActivities.get(token).activity;
     }
 
-    protected void performFinishFloating() {
-        synchronized (mPackages) {
-            Activity a = null;
-            for (ActivityClientRecord ar : mActivities.values()) {
-                a = ar.activity;
-                if (a != null && !a.mFinished && a.getWindow() != null && a.getWindow().mIsFloatingWindow) {
-                    a.finish();
-                }
-            }
-        }
-    }
-
     public final void sendActivityResult(
             IBinder token, String id, int requestCode,
             int resultCode, Intent data) {
@@ -2298,7 +2286,12 @@ public final class ActivityThread {
                     throw e;
 
                 } catch (Exception e) {
-                // Unable to resume activity
+                    if (!mInstrumentation.onException(r.activity, e)) {
+                        throw new RuntimeException(
+                                "Unable to pause activity "
+                                + r.intent.getComponent().toShortString()
+                                + ": " + e.toString(), e);
+                    }
                 }
                 r.paused = true;
             }
