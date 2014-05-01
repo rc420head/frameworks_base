@@ -80,8 +80,8 @@ import android.widget.Toast;
 import com.android.internal.R;
 
 import com.android.internal.notification.NotificationScorer;
-import com.android.internal.util.FastXmlSerializer;
 import com.android.internal.util.slim.QuietHoursHelper;
+import com.android.internal.util.FastXmlSerializer;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
@@ -795,12 +795,8 @@ public class NotificationManagerService extends INotificationManager.Stub
             final int oldUser = info.userid;
             Slog.v(TAG, "disabling notification listener for user " + oldUser + ": " + component);
             // Do not un-register HALO, we un-register only when HALO is closed
-            // Halo
-	    if (!component.getPackageName().equals("HaloComponent")) unregisterListenerService(component, info.userid);
-            Slog.v(TAG, "disabling notification listener for user " + oldUser + ": " + component);
-            unregisterListenerService(component, info.userid);
-            }        
-	}
+            if (!component.getPackageName().equals("HaloComponent")) unregisterListenerService(component, info.userid);
+        }
 
         final int N = toAdd.size();
         for (int i=0; i<N; i++) {
@@ -820,11 +816,8 @@ public class NotificationManagerService extends INotificationManager.Stub
     @Override
     public void registerListener(final INotificationListener listener,
             final ComponentName component, final int userid) {
-	// Halo
-	if (!component.getPackageName().equals("HaloComponent")) checkCallerIsSystem();        
-        checkCallerIsSystem();
-	}
-  
+  if (!component.getPackageName().equals("HaloComponent")) checkCallerIsSystem();        
+
         synchronized (mNotificationList) {
             try {
                 NotificationListenerInfo info
