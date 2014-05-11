@@ -87,7 +87,7 @@ public class PlatLogoActivity extends Activity {
 
         final TextView tv = new TextView(this);
 
-        mIsSlim = SystemProperties.get("ro.slim.version") != null;
+        mIsSlim = SystemProperties.get("ro.candykat.version") != null;
 
         if (light != null) tv.setTypeface(light);
         tv.setTextSize(30);
@@ -95,7 +95,7 @@ public class PlatLogoActivity extends Activity {
         tv.setTextColor(0xFFFFFFFF);
         tv.setGravity(Gravity.CENTER);
         tv.setTransformationMethod(new AllCapsTransformationMethod(this));
-        tv.setText((mIsSlim ? "SlimKAT " : "Android ") + Build.VERSION.RELEASE);
+        tv.setText((mIsSlim ? "CandyKat " : "Android ") + Build.VERSION.RELEASE);
         tv.setVisibility(View.INVISIBLE);
 
         mContent.addView(bg);
