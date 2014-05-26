@@ -190,10 +190,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     private EdgeGestureManager mEdgeGestureManager;
 
-    public int getNotificationCount() {
-        return mNotificationData.size();
-    }
-
     // Notification helper
     protected NotificationHelper mNotificationHelper;
 
@@ -224,6 +220,10 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     public boolean isDeviceProvisioned() {
         return mDeviceProvisioned;
+    }
+    
+    public int getNotificationCount() {
+        return mNotificationData.size();
     }
 
     public NotificationData getNotifications() {
