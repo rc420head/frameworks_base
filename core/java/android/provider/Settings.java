@@ -3855,13 +3855,6 @@ public final class Settings {
          */
         public static final String RECENT_PANEL_FAVORITES = "recent_panel_favorites";
 
-        /**
-<<<<<<< HEAD
-=======
-         * Whether to use the custom status bar header or not
-         * @hide
-         */
-        public static final String STATUS_BAR_CUSTOM_HEADER = "status_bar_custom_header";
 
         /**
          * Show the pending notification counts as overlays on the status bar
@@ -3870,7 +3863,6 @@ public final class Settings {
         public static final String STATUS_BAR_NOTIFICATION_COUNT = "status_bar_notification_count";
 
         /**
->>>>>>> 29c3feb... Frameworks: status bar notification count (1/2)
          * Recent panel expanded mode (auto = 0, always = 1, never = 2).
          * default = 0.
          *
