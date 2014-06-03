@@ -563,26 +563,9 @@ public abstract class BaseStatusBar extends SystemUI implements
                         if (item.getItemId() == R.id.notification_inspect_item) {
                             startApplicationDetailsActivity(packageNameF);
                             animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
-<<<<<<< HEAD
-=======
-                        } else if (item.getItemId() == R.id.notification_inspect_item_force_stop) {
-                            ActivityManager am = (ActivityManager) mContext
-                                    .getSystemService(
-                                    Context.ACTIVITY_SERVICE);
-                            am.forceStopPackage(packageNameF);
-                        } else if (item.getItemId() == R.id.notification_inspect_item_wipe_app) {
-                            ActivityManager am = (ActivityManager) mContext
-                                    .getSystemService(Context.ACTIVITY_SERVICE);
-                            am.clearApplicationUserData(packageNameF,
-                                    new FakeClearUserDataObserver());
-                        } else if (item.getItemId() == R.id.notification_hide_icon_packages) {
-                            item.setChecked(!item.isChecked());
-                            setIconHiddenByUser(packageNameF, item.isChecked());
-                            updateNotificationIcons();
                         } else if (item.getItemId() == R.id.notification_floating_item) {
                             launchFloating(contentIntent);
                             animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
->>>>>>> 88492a4... Launch floating notifications from notification panel (long click)
                         } else {
                             return false;
                         }
