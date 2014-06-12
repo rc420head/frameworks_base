@@ -363,7 +363,7 @@ public class Hover {
         final HoverNotification currentNotification = getHoverNotification(INDEX_CURRENT);
         if (currentNotification != null && !isKeyguardSecureShowing() && !isStatusBarExpanded()
                 && mHoverActive && !mShowing && isScreenOn() && !isSimPanelShowing()
-                && !mNotificationHelper.isPeekShowing() && !mNotificationHelper.isPeekAppShowing()) {
+                && !mNotificationHelper.isPeekShowing()) {
             if (isRingingOrConnected() && isDialpadShowing()) {
                 // incoming call notification has been already processed,
                 // and since we don't want to show other ones, clear and return.
@@ -400,7 +400,7 @@ public class Hover {
                 public void onAnimationStart(Animator animation) {
                     if (isStatusBarExpanded() | (isRingingOrConnected() && isDialpadShowing())
                             | isKeyguardSecureShowing() | mNotificationHelper.isPeekShowing()
-                            | !isScreenOn() | isSimPanelShowing() | mNotificationHelper.isPeekAppShowing()) {
+                            | !isScreenOn() | isSimPanelShowing()) {
                         clearHandlerCallbacks();
                         setAnimatingVisibility(false);
                         dismissHover(true, true);
@@ -411,7 +411,7 @@ public class Hover {
                 public void onAnimationEnd(Animator animation) {
                     if (isStatusBarExpanded() | (isRingingOrConnected() && isDialpadShowing())
                             | isKeyguardSecureShowing() | mNotificationHelper.isPeekShowing()
-                            | !isScreenOn() | isSimPanelShowing() | mNotificationHelper.isPeekAppShowing()) {
+                            | !isScreenOn() | isSimPanelShowing()) {
                         clearHandlerCallbacks();
                         setAnimatingVisibility(false);
                         dismissHover(false, true);
@@ -678,8 +678,10 @@ public class Hover {
         // it to the status bar array before we check if we need to show it
         addStatusBarNotification(entry.notification);
 
-        // show
-        showCurrentNotification();
+        // call showCurrentNotification() only if is not showing,
+        // if not will clear all notifications, that is even safe
+        // but unneeded (@link showCurrentNotification())
+        if (!mShowing) showCurrentNotification();
     }
 
     public void processShowingQueue() {

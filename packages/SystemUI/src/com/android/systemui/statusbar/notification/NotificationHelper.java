@@ -101,8 +101,9 @@ public class NotificationHelper {
         mTelephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
         mTelephonyManager.listen(new CallStateListener(), PhoneStateListener.LISTEN_CALL_STATE);
 
-        // we need to know which is the foreground app
+     // we need to know which is the foreground app
         mActivityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+    }
 
     public String getForegroundPackageName() {
         List<RunningTaskInfo> taskInfo = mActivityManager.getRunningTasks(1);

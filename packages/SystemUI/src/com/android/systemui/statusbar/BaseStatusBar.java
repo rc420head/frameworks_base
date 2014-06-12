@@ -423,14 +423,9 @@ public abstract class BaseStatusBar extends SystemUI implements
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_USER_SWITCHED);
         mContext.registerReceiver(mBroadcastReceiver, filter);
-    }
-	
-        SettingsObserver settingsObserver = new SettingsObserver(new Handler());
-        settingsObserver.observe();
 
         mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.HOVER_STATE),
-                        false, new ContentObserver(new Handler()) {
+                Settings.System.getUriFor(Settings.System.HOVER_STATE), false, new ContentObserver(new Handler()) {
             @Override
             public void onChange(boolean selfChange) {
                 updateHoverState();
@@ -449,6 +444,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                 if(showing) mHover.dismissHover(false, false);
             }
         });
+
     }
 
     public Hover getHoverInstance() {

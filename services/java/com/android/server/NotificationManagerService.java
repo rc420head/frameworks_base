@@ -405,6 +405,7 @@ public class NotificationManagerService extends INotificationManager.Stub
 
     Archive mArchive = new Archive();
 
+
     private int readPolicy(AtomicFile file, String lookUpTag, HashSet<String> db) {
         int result = DEFAULT_RESULT;
         FileInputStream infile = null;
