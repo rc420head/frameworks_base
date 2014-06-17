@@ -162,7 +162,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     // Hover
     protected Hover mHover;
-    protected boolean mHoverEnabled;
     protected boolean mHoverActive;
     protected boolean mHoverHideButton;
     protected ImageView mHoverButton;
@@ -423,16 +422,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         filter.addAction(Intent.ACTION_USER_SWITCHED);
         mContext.registerReceiver(mBroadcastReceiver, filter);
 
-        // Listen for HOVER enabled
-        mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.HOVER_ENABLED),
-                        false, new ContentObserver(new Handler()) {
-            @Override
-            public void onChange(boolean selfChange) {
-                updateHoverActive();
-            }
-        });
-
         // Listen for HOVER button override
         mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.HOVER_HIDE_BUTTON),
@@ -525,7 +514,7 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 
     protected void updateHoverButton(boolean shouldBeVisible) {
-        mHoverButton.setVisibility((mHoverEnabled && !mHoverHideButton && shouldBeVisible) ? View.VISIBLE : View.GONE);
+        mHoverButton.setVisibility((shouldBeVisible && !mHoverHideButton) ? View.VISIBLE : View.GONE);
     }
 
     protected void updateHoverButton() {
@@ -533,18 +522,14 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 
     public void updateHoverActive() {
-        mHoverEnabled = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.HOVER_ENABLED, 0) == 1;
-
-        mHoverActive = mHoverEnabled &&
-                Settings.System.getInt(mContext.getContentResolver(),
+        mHoverActive = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.HOVER_ACTIVE, 0) == 1;
 
         mHoverHideButton = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.HOVER_HIDE_BUTTON, 0) == 1;
 
         updateHoverButton();
-        if (mHoverEnabled) {
+        if (!mHoverHideButton) {
             mHoverButton.setImageResource(mHoverActive ?
                     R.drawable.ic_notify_hover_pressed : R.drawable.ic_notify_hover_normal);
         }
