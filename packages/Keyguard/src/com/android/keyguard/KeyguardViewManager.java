@@ -97,7 +97,7 @@ public class KeyguardViewManager {
 
     private NotificationHostView mNotificationView;
     private NotificationViewManager mNotificationViewManager;
-    private boolean mLockscreenNotifications = false;
+    private boolean mLockscreenNotifications = true;
 
     private KeyguardUpdateMonitorCallback mBackgroundChanger = new KeyguardUpdateMonitorCallback() {
         @Override
@@ -121,6 +121,8 @@ public class KeyguardViewManager {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_NOTIFICATIONS), false, this);
+
+            updateSettings();
         }
 
         @Override
@@ -156,8 +158,6 @@ public class KeyguardViewManager {
 
         SettingsObserver observer = new SettingsObserver(new Handler());
         observer.observe();
-
-        updateSettings();
     }
 
     /**
@@ -430,7 +430,6 @@ public class KeyguardViewManager {
         if (v != null) {
             mKeyguardHost.removeView(v);
         }
-
         final LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.keyguard_host_view, mKeyguardHost, true);
         mKeyguardView = (KeyguardHostView) view.findViewById(R.id.keyguard_host_view);
@@ -440,20 +439,21 @@ public class KeyguardViewManager {
                 options.getBoolean(IS_SWITCHING_USER));
 
         if (mLockscreenNotifications) {
-            mNotificationView = (NotificationHostView)
-                    mKeyguardView.findViewById(R.id.notification_host_view);
-            mNotificationViewManager.setHostView(mNotificationView);
-            mNotificationViewManager.onScreenTurnedOff();
-            mNotificationView.addNotifications();
+            mNotificationView = (NotificationHostView) mKeyguardView.findViewById(R.id.notification_host_view);
+            if (mNotificationViewManager != null && mNotificationView != null) {
+                mNotificationViewManager.setHostView(mNotificationView);
+                mNotificationViewManager.onScreenTurnedOff();
+                mNotificationView.addNotifications();
+            }
         }
 
         // HACK
         // The keyguard view will have set up window flags in onFinishInflate before we set
         // the view mediator callback. Make sure it knows the correct IME state.
         if (mViewMediatorCallback != null) {
-            if (mLockscreenNotifications)
+            if (mLockscreenNotifications) {
                 mNotificationView.setViewMediator(mViewMediatorCallback);
-
+            }
             KeyguardPasswordView kpv = (KeyguardPasswordView) mKeyguardView.findViewById(
                     R.id.keyguard_password_view);
 
@@ -564,7 +564,8 @@ public class KeyguardViewManager {
         if (mKeyguardView != null) {
             mKeyguardView.onScreenTurnedOff();
         }
-        if (mLockscreenNotifications) {
+
+        if (mNotificationViewManager != null) {
             mNotificationViewManager.onScreenTurnedOff();
         }
     }
@@ -621,7 +622,9 @@ public class KeyguardViewManager {
         }
 
         if (mLockscreenNotifications) {
-            mNotificationViewManager.onScreenTurnedOn();
+            if (mNotificationViewManager != null) {
+                mNotificationViewManager.onScreenTurnedOn();
+            }
         }
     }
 
@@ -638,7 +641,9 @@ public class KeyguardViewManager {
         if (DEBUG) Log.d(TAG, "hide()");
 
         if (mLockscreenNotifications) {
-            mNotificationViewManager.onDismiss();
+            if (mNotificationViewManager != null) {
+                mNotificationViewManager.onDismiss();
+            }
         }
 
         if (mKeyguardHost != null) {

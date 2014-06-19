@@ -126,6 +126,7 @@ public final class NavigationBarTransitions extends BarTransitions {
 
         backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.getSearchLight());
         backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.getCameraButton());
+        backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.getNotifsButton());
 
         final View home = mView.getHomeButton();
         final View recent = mView.getRecentsButton();
