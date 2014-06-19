@@ -314,6 +314,11 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
             }
         }.execute((Void) null);
 
+        // theme wallpapers
+        ArrayList<ThemeWallpaperInfo> themeWallpapers = findThemeWallpapers();
+        ThemeWallpapersAdapter twa = new ThemeWallpapersAdapter(this, themeWallpapers);
+        populateWallpapersFromAdapter(mWallpapersView, twa, false, false);
+
         // Populate the live wallpapers
         final LinearLayout liveWallpapersView =
                 (LinearLayout) findViewById(R.id.live_wallpaper_list);
