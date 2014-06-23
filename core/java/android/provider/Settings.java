@@ -208,7 +208,6 @@ public final class Settings {
 
     /**
      * Activity Action: Show settings to allow configuration of Wi-Fi.
-
      * <p>
      * In some cases, a matching Activity may not exist, so ensure you
      * safeguard against this.
@@ -216,7 +215,6 @@ public final class Settings {
      * Input: Nothing.
      * <p>
      * Output: Nothing.
-
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_WIFI_SETTINGS =
@@ -4266,6 +4264,13 @@ public final class Settings {
          * @hide
          */
         public static final String HOVER_EXCLUDE_TOPMOST = "hover_exclude_topmost";
+
+        /**
+         * Hover: Option to exclude from lock screen, default is 0 (off).
+         *
+         * @hide
+         */
+        public static final String HOVER_EXCLUDE_FROM_LOCK_SCREEN = "hover_exclude_from_lock_screen";
 
          /**
          * Hover: long fade out delay, default is 5000ms (5s).
