@@ -16,6 +16,7 @@
 */
 -->
 <resources>
+
     <!-- App circle sidebar -->
     <dimen name="app_sidebar_trigger_width">12dip</dimen>
     <dimen name="app_sidebar_listview_width">160dp</dimen>
@@ -25,4 +26,6 @@
     <!-- Hover dimens -->
     <dimen name="hover_height">64dp</dimen>
     <dimen name="hover_cling_width">-1px</dimen>
+    <dimen name="hover_tablet_width">478dp</dimen>
+
 </resources>
