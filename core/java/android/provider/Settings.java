@@ -4042,12 +4042,19 @@ public final class Settings {
         public static final String WHITELIST_APP_CIRCLE_BAR = "whitelist_app_circle_bar";
 
         /**
-         * Hover, default is 0 (off).
+         * Enable Hover, default is 0 (off).
+         *
+         * @hide
+         */
+        public static final String HOVER_ENABLED = "hover_enabled";
+
+        /**
+         * Hover is active, default is 0 (off).
          * 0 = disabled
          * 1 = enabled
          * @hide
          */
-        public static final String HOVER_STATE = "hover_state";
+        public static final String HOVER_ACTIVE = "hover_active";
 
         /**
          * Animate-flip Quick Settings Panel Tiles on click
