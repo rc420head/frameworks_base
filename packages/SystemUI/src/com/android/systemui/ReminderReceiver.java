@@ -32,6 +32,7 @@ import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.android.internal.util.slim.QuietHoursHelper;
 import com.android.systemui.service.ReminderService;
 
 public class ReminderReceiver extends BroadcastReceiver {
@@ -87,11 +88,9 @@ public class ReminderReceiver extends BroadcastReceiver {
                 PendingIntent result = null;
                 Intent serviceIntent = new Intent(context, ReminderService.class);
                 if (alertMode != 0
-                        && Settings.System.getIntForUser(
-                        context.getContentResolver(),
-                        Settings.System.QUIET_HOURS_MUTE,
-                        0, UserHandle.USER_CURRENT_OR_SELF) != 2) {
-                        context.startService(serviceIntent);
+                        && !QuietHoursHelper.inQuietHours(
+                        context, Settings.System.QUIET_HOURS_MUTE)) {
+                    context.startService(serviceIntent);
                 }
 
                 // Stop sound on click

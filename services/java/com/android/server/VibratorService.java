@@ -44,6 +44,7 @@ import android.view.InputDevice;
 
 import com.android.internal.app.IAppOpsService;
 import com.android.internal.app.IBatteryStats;
+import com.android.internal.util.slim.QuietHoursHelper;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -202,10 +203,7 @@ public class VibratorService extends IVibratorService.Stub
         // either a timeout of > 0 or a non-null pattern.
         if (milliseconds <= 0 || (mCurrentVibration != null
                 && mCurrentVibration.hasLongerTimeout(milliseconds))
-                || Settings.System.getIntForUser(
-                mContext.getContentResolver(),
-                Settings.System.QUIET_HOURS_HAPTIC,
-                0, UserHandle.USER_CURRENT_OR_SELF) == 2) {
+                || QuietHoursHelper.inQuietHours(mContext, Settings.System.QUIET_HOURS_HAPTIC)) {
             // Ignore this vibration since the current vibration will play for
             // longer than milliseconds.
             return;
@@ -256,10 +254,7 @@ public class VibratorService extends IVibratorService.Stub
                 != PackageManager.PERMISSION_GRANTED) {
             throw new SecurityException("Requires VIBRATE permission");
         }
-        if (Settings.System.getIntForUser(
-                mContext.getContentResolver(),
-                Settings.System.QUIET_HOURS_HAPTIC,
-                0, UserHandle.USER_CURRENT_OR_SELF) == 2) {
+        if (QuietHoursHelper.inQuietHours(mContext, Settings.System.QUIET_HOURS_HAPTIC)) {
             return;
         }
         verifyIncomingUid(uid);
