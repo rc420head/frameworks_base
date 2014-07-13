@@ -215,5 +215,7 @@
     <color name="trds_background">#ffffffff</color>
     <color name="trds_text">#ff000000</color>
 
-</resources>
+    <!-- Action(s) list background used on expanded notifications -->
+    <drawable name="notification_action_list_bg">#00000000</drawable>
 
+</resources>
