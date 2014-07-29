@@ -1222,6 +1222,11 @@ public class KeyguardViewMediator {
         }
 
         final ContentResolver cr = mContext.getContentResolver();
+
+        if (Settings.System.getInt(cr, Settings.System.QUIET_HOURS_SYSTEM, 0) == 2) {
+            return;
+        }
+
         if (Settings.System.getInt(cr, Settings.System.LOCKSCREEN_SOUNDS_ENABLED, 1) == 1) {
             final int whichSound = locked
                 ? mLockSoundId
