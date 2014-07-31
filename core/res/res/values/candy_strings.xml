@@ -8,4 +8,7 @@
     <string name="permdesc_recordScreen">Allows the app to
         record the users screen.</string>
 
+    <!-- label for screen record item in phone options dialog -->
+    <string name="global_action_screenrecord">Screen record</string>
+
 </resources>
