@@ -63,7 +63,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     private static final int FLIGHT_MODE_ICON = R.drawable.stat_sys_signal_flightmode;
 
     private static final String UPDATE_QUIET_HOURS_MODES =
-            "com.android.settings.liquid.service.UPDATE_QUIET_HOURS_MODES";
+            "com.android.settings.slim.service.UPDATE_QUIET_HOURS_MODES";
 
     // telephony
     boolean mHspaDataDistinguishable;
