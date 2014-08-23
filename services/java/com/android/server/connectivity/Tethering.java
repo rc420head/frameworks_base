@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.pm.ThemeUtils;
 import android.content.res.Resources;
 import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
@@ -77,6 +78,7 @@ import java.util.Set;
 public class Tethering extends INetworkManagementEventObserver.Stub {
 
     private Context mContext;
+    private Context mUiContext;
     private final static String TAG = "Tethering";
     private final static boolean DBG = true;
     private final static boolean VDBG = false;
@@ -163,6 +165,13 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
         mContext.registerReceiver(mStateReceiver, filter);
+
+        ThemeUtils.registerThemeChangeReceiver(mContext, new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context content, Intent intent) {
+                mUiContext = null;
+            }
+        });
 
         filter = new IntentFilter();
         filter.addAction(Intent.ACTION_MEDIA_SHARED);
@@ -517,7 +526,6 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
                     IntentFilter filter = new IntentFilter(ACTION_TURN_WIFI_AP_OFF);
                     mContext.registerReceiver(mNotificationBroadcastReceiver, filter);
                 }
-
             }
             mTetheredNotification = builder.build();
             mTetheredNotification.defaults &= ~Notification.DEFAULT_SOUND;
@@ -525,6 +533,13 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
         }
         notificationManager.notifyAsUser(null, mTetheredNotification.icon,
                 mTetheredNotification, UserHandle.ALL);
+    }
+
+    private Context getUiContext() {
+        if (mUiContext == null) {
+            mUiContext = ThemeUtils.createUiContext(mContext);
+        }
+        return mUiContext != null ? mUiContext : mContext;
     }
 
     private void clearTetheredNotification() {

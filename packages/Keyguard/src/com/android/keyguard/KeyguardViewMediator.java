@@ -112,6 +112,9 @@ public class KeyguardViewMediator {
     private static final String SHAKE_SECURE_TIMER =
         "com.android.keyguard.SHAKE_SECURE_TIMER";
 
+    private static final String DISMISS_KEYGUARD_SECURELY_ACTION =
+            "com.android.keyguard.action.DISMISS_KEYGUARD_SECURELY";
+
     // used for handler messages
     private static final int SHOW = 2;
     private static final int HIDE = 3;
@@ -515,6 +518,8 @@ public class KeyguardViewMediator {
         filter.addAction(SHAKE_SECURE_TIMER);
         filter.addAction(DELAYED_KEYGUARD_ACTION);
         mContext.registerReceiver(mBroadcastReceiver, filter);
+        mContext.registerReceiver(mBroadcastReceiver, new IntentFilter(DISMISS_KEYGUARD_SECURELY_ACTION),
+                android.Manifest.permission.CONTROL_KEYGUARD, null);
 
         mKeyguardDisplayManager = new KeyguardDisplayManager(context);
 
@@ -1061,6 +1066,10 @@ public class KeyguardViewMediator {
                             mLockPatternUtils.getCurrentUser());
                     KeyguardHostView.shakeSecureNow();
                     adjustStatusBarLocked();
+                }
+            } else if (DISMISS_KEYGUARD_SECURELY_ACTION.equals(intent.getAction())) {
+                synchronized (KeyguardViewMediator.this) {
+                    dismiss();
                 }
             }
         }
