@@ -625,7 +625,6 @@ public class WallpaperCropActivity extends Activity {
                         if (scaleDownSampleSize > 1) {
                             options.inSampleSize = scaleDownSampleSize;
                         }
-                        fullSize = BitmapFactory.decodeStream(is, null, options);
                     }
                     if (fullSize != null) {
                         // Find out the true sample size that was used by the decoder
