@@ -367,7 +367,6 @@ public class WallpaperCropActivity extends Activity {
         }
         // Cap the amount of extra width
             cropRect.bottom = cropRect.top + portraitHeight / cropScale;
-        extraSpace = Math.min(extraSpace, maxExtraSpace);
 
         if (centerCrop) {
             cropRect.left -= extraSpace / 2f;
@@ -380,18 +379,6 @@ public class WallpaperCropActivity extends Activity {
             }
         }
 
-        // ADJUST CROP HEIGHT
-        if (isPortrait) {
-            cropRect.bottom = cropRect.top + defaultWallpaperSize.y / cropScale;
-        } else { // LANDSCAPE
-            float extraPortraitHeight =
-                    portraitHeight / cropScale - cropRect.height();
-            float expandHeight =
-                    Math.min(Math.min(rotatedInSize[1] - cropRect.bottom, cropRect.top),
-                            extraPortraitHeight / 2);
-            cropRect.top -= expandHeight;
-            cropRect.bottom += expandHeight;
-        }
         final int outWidth = (int) Math.round(cropRect.width() * cropScale);
         final int outHeight = (int) Math.round(cropRect.height() * cropScale);
 
