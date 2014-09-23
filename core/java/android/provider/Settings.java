@@ -4299,13 +4299,14 @@ public final class Settings {
          * @hide
          */
         public static final String RECENT_PANEL_BG_COLOR = "recent_panel_bg_color";
+        
+        public static final String HEADS_UP_EXCLUDE_FROM_LOCK_SCREEN = "heads_up_exclude_from_lock_screen";
 
         /**
          * Heads up: Option to exclude from lockscreen, default is 0 (off).
          *
          * @hide
-         */
-        public static final String HEADS_UP_EXCLUDE_FROM_LOCK_SCREEN = "heads_up_exclude_from_lock_screen";
+         *
          * Recent card background color
          *
          * @hide
