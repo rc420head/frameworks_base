@@ -3335,6 +3335,14 @@ public final class Settings {
         public static final String EXPANDED_RING_MODE = "expanded_ring_mode";
 
         /**
+          * Disable smart cover window
+          * 0 = no
+          * 1 = yes
+          * @hide
+          */
+         public static final String DISABLE_SMART_COVER = "disable_smart_cover";
+
+        /**
          * Quick Settings Quick Pulldown
          *
          * @hide
