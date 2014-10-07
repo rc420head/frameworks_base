@@ -81,7 +81,6 @@ public class RecentController implements RecentPanelView.OnExitListener,
     private int mAnimationState = ANIMATION_STATE_NONE;
 
     public static float DEFAULT_SCALE_FACTOR = 1.0f;
-
     private Context mContext;
     private WindowManager mWindowManager;
     private IWindowManager mWindowManagerService;
