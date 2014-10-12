@@ -67,6 +67,9 @@ public class CommandQueue extends IStatusBar.Stub {
     private static final int MSG_HIDE_HEADS_UP              = 25 << MSG_SHIFT;
     private static final int MSG_HIDE_HEADS_UP_CANDIDATE    = 26 << MSG_SHIFT;
     private static final int MSG_UPDATE_HEADS_UP_POSITION   = 27 << MSG_SHIFT;
+    private static final int MSG_UPDATE_HEADS_UP_POSITION   = 26 << MSG_SHIFT;
+    private static final int MSG_SET_ACTIONBAR_STATUS       = 27 << MSG_SHIFT;
+    private static final int MSG_SET_APPCOLOR_STATUS        = 28 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -121,6 +124,8 @@ public class CommandQueue extends IStatusBar.Stub {
         public void toggleLastApp();
         public void toggleKillApp();
         public void setButtonDrawable(int buttonId, int iconId);
+        public void sendActionColorBroadcast(int st_color, int ic_color);
+        public void sendAppColorBroadcast(int duration);
     }
 
     public CommandQueue(Callbacks callbacks, StatusBarIconList list) {
@@ -340,6 +345,30 @@ public class CommandQueue extends IStatusBar.Stub {
         }
     }
 
+    public void setAutoRotate(boolean enabled) {
+        synchronized (mList) {
+            mHandler.removeMessages(MSG_SET_AUTOROTATE_STATUS);
+            mHandler.obtainMessage(MSG_SET_AUTOROTATE_STATUS,
+                enabled ? 1 : 0, 0, null).sendToTarget();
+        }
+    }
+
+    public void sendActionColorBroadcast(int st_color, int ic_color) {
+        synchronized (mList) {
+            mHandler.removeMessages(MSG_SET_ACTIONBAR_STATUS);
+            mHandler.obtainMessage(MSG_SET_ACTIONBAR_STATUS,
+                st_color, ic_color, null).sendToTarget();
+        }
+    }
+
+    public void sendAppColorBroadcast(int duration) {
+        synchronized (mList) {
+            mHandler.removeMessages(MSG_SET_APPCOLOR_STATUS);
+            mHandler.obtainMessage(MSG_SET_APPCOLOR_STATUS,
+                duration, 0, null).sendToTarget();
+        }
+    }
+
     private final class H extends Handler {
         public void handleMessage(Message msg) {
             final int what = msg.what & MSG_MASK;
@@ -452,6 +481,15 @@ public class CommandQueue extends IStatusBar.Stub {
                     break;
                 case MSG_TOGGLE_KILL_APP:
                     mCallbacks.toggleKillApp();
+                    break;
+                case MSG_SET_AUTOROTATE_STATUS:
+                    mCallbacks.setAutoRotate(msg.arg1 != 0);
+                    break;
+                case MSG_SET_ACTIONBAR_STATUS:
+                    mCallbacks.sendActionColorBroadcast(msg.arg1, msg.arg2);
+                    break;
+                case MSG_SET_APPCOLOR_STATUS:
+                    mCallbacks.sendAppColorBroadcast(msg.arg1);
                     break;
             }
         }

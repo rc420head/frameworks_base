@@ -52,6 +52,8 @@ import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -63,7 +65,9 @@ import android.view.ViewGroup;
 import android.view.ViewManager;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-
+import com.android.internal.util.slim.TorchConstants;
+import com.android.internal.util.slim.DeviceUtils;
+import com.android.internal.util.slim.ColorUtils;
 import com.android.internal.policy.IKeyguardShowCallback;
 import com.android.internal.widget.LockPatternUtils;
 
@@ -215,6 +219,22 @@ public class KeyguardViewManager {
         Resources res = mContext.getResources();
         return res.getBoolean(R.bool.config_enableLockScreenTranslucentDecor)
             && res.getBoolean(R.bool.config_enableTranslucentDecor);
+    }
+
+    private void setCustomBackground(Bitmap bmp) {
+        mKeyguardHost.setCustomBackground( new BitmapDrawable(mContext.getResources(),
+                    bmp != null ? bmp : mCustomImage) );
+        updateShowWallpaper(bmp == null && mCustomImage == null);
+    }
+
+    public void setBackgroundBitmap(Bitmap bmp) {
+        if (bmp != null && mSeeThrough) {
+            if (mBlurRadius > 0) {
+                mCustomImage = ColorUtils.blurBitmap(mContext, bmp, mBlurRadius);
+            } else {
+                mCustomImage = bmp;
+            }
+        }
     }
 
     class ViewManagerHost extends FrameLayout {

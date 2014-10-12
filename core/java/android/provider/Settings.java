@@ -3673,6 +3673,7 @@ public final class Settings {
 
         /**
          * If we do or do not use daily time-range preferences
+         * Weather to minimize lockscreen challenge on screen turned on
          * @hide
          */
         public static final String QUIET_HOURS_DAILY = "quiet_hours_daily";
@@ -4362,6 +4363,50 @@ public final class Settings {
          * @hide
          */
         public static final String ON_THE_GO_SERVICE_RESTART = "on_the_go_service_restart";
+
+        /**
+         * Whether dynamic menu button is shown or not or dynamic (default)
+         * option for tinted statusbar
+         * 0 = disabled
+         * 1 = follow actionbar
+         * 2 = follow screen
+         * 3 = follow all
+         * @hide
+         */
+        public static final String STATUS_BAR_TINTED_COLOR = "status_bar_tinted_color";
+
+        /**
+         * option for systemui color
+         * 0 = statusbar
+         * 1 = navigationbar
+         * 2 = both
+         * @hide
+         */
+        public static final String STATUS_BAR_TINTED_OPTION = "status_bar_tinted_option";
+
+        /**
+         * option for filter tinted statusbar
+         * @hide
+         */
+        public static final String STATUS_BAR_TINTED_FILTER = "status_bar_tinted_filter";
+
+        /**
+         * option for filter gradient statusbar
+         * @hide
+         */
+        public static final String STATUS_BAR_TINTED_GRADIENT = "status_bar_tinted_gradient";
+
+        /**
+         * option for transparent statusbar
+         * @hide
+         */
+        public static final String STATUS_BAR_TINTED_STATBAR_TRANSPARENT = "status_bar_tinted_statbar_transparent";
+
+        /**
+         * option for transparent navbar
+         * @hide
+         */
+        public static final String STATUS_BAR_TINTED_NAVBAR_TRANSPARENT = "status_bar_tinted_navbar_transparent";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

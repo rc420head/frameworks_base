@@ -1239,6 +1239,7 @@ public interface WindowManagerPolicy {
     public boolean isImmersiveMode(int vis);
 
     /**
+<<<<<<< HEAD
      * Toggle global menu
      *
      * @hide
@@ -1251,10 +1252,24 @@ public interface WindowManagerPolicy {
      * @hide
      */
     void toggleStatusBar();
+     * @hide
+     */
+    public int getStatusbarDisplayHeight();
+
+    /**
+     * @hide
+     */
+    public int getNavigationbarDisplayHeight(int rotation);
 
     /**
      * @hide
      */
     public void updateStatusBarNavBarHeight();
 
+    public void sendActionColorBroadcast(int st_color, int ic_color);
+
+    /**
+     * @hide
+     */
+    public void sendAppColorBroadcast(int duration);
 }
