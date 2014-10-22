@@ -2150,7 +2150,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
 
             if (CLOSE_PANEL_WHEN_EMPTIED && mNotificationData.size() == 0
-                    && !mNotificationPanel.isTracking()) {
+                    && !mNotificationPanel.isTracking() && !isShowingSettings()) {
                 animateCollapsePanels();
             }
         }
