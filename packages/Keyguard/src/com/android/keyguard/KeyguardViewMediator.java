@@ -255,8 +255,6 @@ public class KeyguardViewMediator {
     private int mUnlockSoundId;
     private int mLockSoundStreamId;
 
-    private int mLidState = WindowManagerPolicy.WindowManagerFuncs.LID_ABSENT;
-
     /**
      * The volume applied to the lock/unlock sounds.
      */
@@ -519,8 +517,6 @@ public class KeyguardViewMediator {
         IntentFilter filter = new IntentFilter();
         filter.addAction(SHAKE_SECURE_TIMER);
         filter.addAction(DELAYED_KEYGUARD_ACTION);
-        mContext.registerReceiver(mBroadcastReceiver,
-                new IntentFilter(WindowManagerPolicy.ACTION_LID_STATE_CHANGED));
         mContext.registerReceiver(mBroadcastReceiver, filter);
         mContext.registerReceiver(mBroadcastReceiver, new IntentFilter(DISMISS_KEYGUARD_SECURELY_ACTION),
                 android.Manifest.permission.CONTROL_KEYGUARD, null);
@@ -644,6 +640,7 @@ public class KeyguardViewMediator {
                 // Do not enable the keyguard if the prox sensor forced the screen off.
             } else {
                 doKeyguardLocked(null);
+                
             }
         }
         KeyguardUpdateMonitor.getInstance(mContext).dispatchScreenTurndOff(why);
@@ -980,7 +977,7 @@ public class KeyguardViewMediator {
         Message msg = mHandler.obtainMessage(RESET, options);
         mHandler.sendMessage(msg);
     }
-
+   
     /**
      * Send message to keyguard telling it to verify unlock
      * @see #handleVerifyUnlock()
@@ -1074,18 +1071,10 @@ public class KeyguardViewMediator {
             } else if (DISMISS_KEYGUARD_SECURELY_ACTION.equals(intent.getAction())) {
                 synchronized (KeyguardViewMediator.this) {
                     dismiss();
-            } else if (WindowManagerPolicy.ACTION_LID_STATE_CHANGED.equals(intent.getAction())) {
-                final int state = intent.getIntExtra(WindowManagerPolicy.EXTRA_LID_STATE,
-                        WindowManagerPolicy.WindowManagerFuncs.LID_ABSENT);
-                synchronized (KeyguardViewMediator.this) {
-                    if(state != mLidState) {
-                        mLidState = state;
-                        mUpdateMonitor.dispatchLidStateChange(state);
-                        }
-                    }
                 }
             }
-        };
+        }
+    };
 
     public void keyguardDone(boolean authenticated, boolean wakeup) {
         if (DEBUG) Log.d(TAG, "keyguardDone(" + authenticated + ")");
