@@ -4631,6 +4631,17 @@ public final class Settings {
         public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
 
         /**
+         * whether to enable or disable vibration on succesful fingerprint auth
+         *
+         * @hide
+         */
+        public static final String FINGERPRINT_SUCCESS_VIB = "fingerprint_success_vib";
+
+        /** @hide */
+        private static final Validator FINGERPRINT_SUCCESS_VIB_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4696,6 +4707,7 @@ public final class Settings {
             ALARM_ALERT,
             NOTIFICATION_LIGHT_PULSE,
             ADVANCED_REBOOT,
+            FINGERPRINT_SUCCESS_VIB,
         };
 
         /**
@@ -4817,6 +4829,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
             PRIVATE_SETTINGS.add(ADVANCED_REBOOT);
             PRIVATE_SETTINGS.add(SWAP_VOLUME_BUTTONS);
+            PRIVATE_SETTINGS.add(FINGERPRINT_SUCCESS_VIB);
         }
 
         /**
@@ -4911,6 +4924,7 @@ public final class Settings {
             VALIDATORS.put(SHOW_BATTERY_PERCENT, SHOW_BATTERY_PERCENT_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_LIGHT_PULSE, BOOLEAN_VALIDATOR);
             VALIDATORS.put(ADVANCED_REBOOT, ADVANCED_REBOOT_VALIDATOR);
+            VALIDATORS.put(FINGERPRINT_SUCCESS_VIB, FINGERPRINT_SUCCESS_VIB_VALIDATOR);
         }
 
         /**
