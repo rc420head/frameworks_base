@@ -283,7 +283,7 @@ import com.android.internal.policy.KeyguardDismissCallback;
 import com.android.internal.policy.PhoneWindow;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.util.ArrayUtils;
-import com.android.internal.util.liquid.LiquidUtils;
+import com.android.internal.util.aquarios.AquaCafUtils;
 import com.android.internal.util.ScreenshotHelper;
 import com.android.internal.util.ScreenShapeHelper;
 import com.android.internal.widget.PointerLocationView;
@@ -6515,7 +6515,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         Slog.i(TAG, "isActivityLaunchEvent from DeviceKeyHandler " + eventLaunchActivity);
                     }
                     wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromKey, "android.policy:KEY");
-                    LiquidUtils.launchKeyguardDismissIntent(mContext, UserHandle.CURRENT, eventLaunchActivity);
+                    AquaCafUtils.launchKeyguardDismissIntent(mContext, UserHandle.CURRENT, eventLaunchActivity);
                     result &= ~ACTION_PASS_TO_USER;
                     return result;
                 }
